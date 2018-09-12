@@ -13,7 +13,12 @@ export class HttpService {
     }
 
     getTasks(){
-        return this._http.get('/tasks');
+      return this._http.get('/tasks');
      }
+
+    displayDetail(id){
+      console.log(id)
+      return this._http.get('/tasks/' + id);
+    }
 }
 

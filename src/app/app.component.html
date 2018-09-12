@@ -3,6 +3,14 @@
   <h1>
     Welcome to {{ title }}    
   </h1>
-  <button (click)="getTasks()">Get Tasks</button>
-  <p *ngFor="let i of tasks">{{i}}</p>
+  <button (click)="displayData()">Get Tasks</button>
+  <div *ngIf="display" style="border: solid black 1px">
+    <p *ngFor="let i of tasks">{{i.title}} - {{i.description}} <button (click)="displayDetail(i._id)">Details</button></p>
+  </div>
+  <div *ngIf="detail" style="border: solid black 1px">
+    <p>{{detailData.data[0]._id}}</p>
+    <p>{{detailData.data[0].title}}</p>
+    <p>{{detailData.data[0].description}}</p>
+
+  </div>
   </div>
