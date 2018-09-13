@@ -20,9 +20,9 @@ export class AppComponent implements OnInit {
     this.display = false;
     this.detail = false;
   }
-  title = "RESTFUL API INTERACTIVE"
+  title = "NESTED"
   tasks = [];
-  detailData = {};
+  selectedTask = {};
   getTasks(){
     let observable = this._httpService.getTasks();
     observable.subscribe(data => {
@@ -35,16 +35,15 @@ export class AppComponent implements OnInit {
   displayData(){
     this.display = true;
   }
-
   displayDetail(id: String): void{
     this.detail = true;
-    console.log(`Finding ${id}`);
     let observable = this._httpService.displayDetail(id);
     observable.subscribe(data => {
       console.log("Here be single data: ", data)
-      this.detailData = data;
+      this.selectedTask = data;
     })
-
   }
+
+
 
 }
