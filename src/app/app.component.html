@@ -3,14 +3,33 @@
   <h1>
     Welcome to {{ title }}    
   </h1>
-  <button (click)="displayData()">Get Tasks</button>
-  <div *ngIf="display" style="border: solid black 1px">
-    <p *ngFor="let i of tasks">{{i.title}} - {{i.description}} <button (click)="displayDetail(i._id)">Details</button></p>
-  </div>
-  <div *ngIf="detail" style="border: solid black 1px">
-    <p>{{detailData.data[0]._id}}</p>
-    <p>{{detailData.data[0].title}}</p>
-    <p>{{detailData.data[0].description}}</p>
-
-  </div>
+</div>
+ <div style="text-align: left; border: solid black 1px; display: inline-block; padding: 10px">
+  <h3>New Task</h3>
+  <form (submit)="createNewTask()">
+    <label style="background: #e8e8e8; padding: 2px; margin: 5px">Title</label>
+    <input type="text" name="newTask.title" [(ngModel)] ="newTask.title" />
+    <br>
+    <label style="background: #e8e8e8; padding: 2px; margin: 5px">Description</label>
+    <input type="text" name="newTask.description" [(ngModel)] ="newTask.description" />
+    <input type="submit" value="Create Task"/>
+  </form>
+</div>
+<br>
+<div *ngIf="detail">
+    <form (submit) = "edit()">
+      <h4>Title:  <input type="text" name="editTask.title"  value="{{detailData.data[0].title}}" [(ngModel)] = "editTask.title"/></h4>
+      <h5>Description: <input type="text" name="editTask.description"  size="50" value="{{detailData.data[0].description}}" [(ngModel)] = "editTask.description"/></h5>
+      <h5>Completed: <input type="text" name="editTask.completed"  value="{{detailData.data[0].completed}}" [(ngModel)] = "editTask.completed"/></h5>
+      <input type="hidden" name="editTask.id" value="{{detail.Data.data[0]._id}}">
+      <input type="submit" value="Edit Task">
+    </form>
+</div>
+<br>
+  <div *ngFor="let i of tasks" style="border: solid black 1px; display:inline-block; min-width: 300px; padding-left: 10px; padding-bottom: 10px">
+    <h4>{{i.title}}</h4>
+    <h5>{{i.description}}</h5>
+    <h5>Completion Status: {{i.completed}}</h5>
+    <button (click)="displayDetail(i._id)">Edit</button>
+    <button (click)="delete(i._id)">Delete</button>
   </div>
