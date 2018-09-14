@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { HttpService } from 'src/app/http.service';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-detail-display', 
@@ -6,13 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./detail-display.component.css']
 })
 export class DetailDisplayComponent implements OnInit {
-  @Input() taskToShow: any;
-
-  constructor() { }
+  @Input() cakeToShow: any;
+  newComment: {id: "", rating: "", text: ""}
+  rating: number;
+  constructor(private _httpService: HttpService) { }
 
   ngOnInit() { 
+  this.newComment = {id:"", rating: "", text: ""}
   }
-  showTask(){
-    console.log(this.taskToShow)
+  comment(){
+    this.newComment.id = this.cakeToShow.data[0]._id;
+    let observable = this._httpService.comment(this.newComment);
+    observable.subscribe(data => console.log("Attempting to upload comment with: ", data))
+    this.newComment = {id: "", rating: "", text: ""}
   }
 }

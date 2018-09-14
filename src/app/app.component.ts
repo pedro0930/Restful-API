@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from './http.service';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,41 +8,58 @@ import { HttpService } from './http.service';
 })
 
 export class AppComponent implements OnInit {
-  display: boolean;
   detail: boolean;
+  cakes: [];
+  newCake: any;
+  selectedCake: {}
+
   constructor(private _httpService: HttpService){
     
   }
   ngOnInit(){
-    this.getTasks();
-    this.tasks;
-    this.display = false;
-    this.detail = false;
+    this.cakes;
+    this.newCake = {baker: "", img: ""};
+    this.getCakes();
+    this.selectedCake = {id: "", baker: "", img: "", rating: ""}
+
+    
   }
-  title = "NESTED"
-  tasks = [];
-  selectedTask = {};
-  getTasks(){
-    let observable = this._httpService.getTasks();
+  title = "the Cake Rating App"
+
+  getCakes(){
+    this.cakes = [];
+    let observable = this._httpService.getCakes();
     observable.subscribe(data => {
       console.log("Here be data: ", data)
       for(var i = 0; i < data.data.length; i++){
-        this.tasks.push(data.data[i]) ;
+        this.cakes.push(data.data[i]) ;
       }
     });
   }
-  displayData(){
-    this.display = true;
+
+  uploadCake(){
+    let observable = this._httpService.uploadCake(this.newCake);
+    observable.subscribe( data => console.log("Attempting to upload cake with: ", data))
+    this.newCake = {baker: "", img: ""}
+    this.getCakes()
   }
-  displayDetail(id: String): void{
+
+  showCake(id: String){
     this.detail = true;
-    let observable = this._httpService.displayDetail(id);
+    console.log(`Finding ${id}`);
+    let observable = this._httpService.showCake(id);
     observable.subscribe(data => {
       console.log("Here be single data: ", data)
-      this.selectedTask = data;
+      this.selectedCake = data;
+      this.selectedCake['rating'] = this.getAvgRating(data);
     })
   }
-
-
-
+  getAvgRating(data){
+    var sum: number = 0;
+    
+    for(var i = 0; i< data.data[0].comments.length; i++){
+      sum += data.data[0].comments[i].rating
+    }
+    return sum/data.data[0].comments.length-1
+  }
 }

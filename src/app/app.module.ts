@@ -7,6 +7,7 @@ import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { DetailDisplayComponent } from './detail-display/detail-display.component';
 
+import { FormsModule } from '@angular/forms'; // <-- import FormsModule.
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +15,8 @@ import { DetailDisplayComponent } from './detail-display/detail-display.componen
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

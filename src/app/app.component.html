@@ -3,12 +3,29 @@
   <h1>
     Welcome to {{ title }}    
   </h1>
-  <button (click)="displayData()">Get Tasks</button>
-
-  <div *ngIf="display" style="border: solid black 1px">
-    <p *ngFor="let i of tasks">{{i.title}} - {{i.description}} <button (click)="displayDetail(i._id)">Details</button></p>
-  </div>
-
-  <app-detail-display *ngIf="detail" [taskToShow] ="selectedTask"> </app-detail-display>
-    
 </div>
+<div style="border: solid black 1px; display:inline-block; width: 35%; text-align: center">
+    <h3>Submit Cake</h3>
+    <hr>
+    <form (submit)="uploadCake()">
+      <label>Baker Name:</label>
+      <input type="text" name="newCake.baker" [(ngModel)] = "newCake.baker"/>
+      <br>
+      <label>Image Url:</label>
+      <input type="text" name="newCake.img" [(ngModel)] = "newCake.img"/>
+      <br>
+      <input type="submit" style="background-color: lightskyblue; color: white; padding: 5px; border-radius: 5px" value="Submit dat cake">
+    </form>
+
+
+  <div style="overflow: scroll;">
+    <div *ngFor="let i of cakes" style="border: solid black 1px; ">
+      <h3>Baked by {{i.baker}}</h3>
+      <button (click) ="showCake((i._id))">
+      <img style="width: 80%" src="assets/img/{{i.img}}.jpg">
+      </button>
+    </div>
+  </div>
+</div>
+<app-detail-display *ngIf="detail" [cakeToShow] = "selectedCake"></app-detail-display>
+

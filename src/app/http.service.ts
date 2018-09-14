@@ -12,13 +12,20 @@ export class HttpService {
     constructor(private _http: HttpClient){
     }
 
-    getTasks(){
-      return this._http.get('/tasks');
+    getCakes(){
+      return this._http.get('/cake');
      }
+    
+    uploadCake(newCake){
+      return this._http.post('/cake', newCake);
+    }
+    showCake(id){
+      return this._http.get('/cake/' + id);
+    }
 
-    displayDetail(id){
-      console.log(id)
-      return this._http.get('/tasks/' + id);
+    comment(newComment){
+      console.log("attempting to save comment: ", newComment);
+      return this._http.post('/comment', newComment);
     }
 }
 

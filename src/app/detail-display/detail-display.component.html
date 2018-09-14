@@ -1,9 +1,19 @@
+<div style="border: solid green 1px; width: 30%; display: inline-block; vertical-align: top; text-align:center">
+    <h3>Baked By {{cakeToShow.data[0].baker}}</h3>
+    <h4 style="color:rgb(223, 163, 0)">Average Rating: {{cakeToShow.rating}}</h4>
+    <img style="width: 80%" src="assets/img/{{cakeToShow.data[0].img}}.jpg">
+    <p *ngFor="let i of cakeToShow.data[0].comments">{{i.comment_txt}} - <span style="color:rgb(223, 163, 0)"> {{i.rating}} stars</span></p>
 
-<p>{{taskToShow.data[0].title}}</p>
-
-<p>{{taskToShow.data[0].description}}</p>
-
-
-<p>{{taskToShow.data[0]._id}}</p>
-
-
+    <form (submit)="comment(cakeToShow.data[0]._id)">
+        <label>Leave a comment:</label>
+        <input type="text" name="newComment.text" [(ngModel)] = "newComment.text">
+        <select name="rating"  [(ngModel)] = "newComment.rating" >
+            <option type="number" value=1>1 Star</option>
+            <option type="number" value=2>2 Stars</option>
+            <option type="number" value=3>3 Stars</option>
+            <option type="number" value=4>4 Stars</option>
+            <option type="number" value=5>5 Stars</option>
+        </select>
+        <input type="submit" value="Send">
+    </form>
+</div>
